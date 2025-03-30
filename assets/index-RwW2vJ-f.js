@@ -240,7 +240,7 @@ Error generating stack: `+l.message+`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   cursor: pointer;
   background-color: transparent;
   pointer-events: ${e=>e.disabled?"none":"auto"};
@@ -298,17 +298,16 @@ Error generating stack: `+l.message+`
      height: 120px;
   }
 `,og=L.img`
-  max-width: 100%;
-  max-height: 100%;
+  /* max-width: 100%; */ /* Remove max-width */
+  width: 67%; /* Set width to 67% of container */
+  max-height: 100%; /* Keep max-height limit */
   object-fit: contain;
   image-rendering: pixelated;
   position: relative;
   z-index: 1;
-  transition: transform 0.2s ease-in-out; /* Add transition for scale */
+  transition: transform 0.2s ease-in-out;
 
-  /* Add scale effect on parent hover */
   ${nu}:hover & {
-    /* Apply scale only if the parent container is not disabled */
     transform: ${e=>e.disabled?"none":"scale(1.05)"};
   }
 
@@ -317,6 +316,8 @@ Error generating stack: `+l.message+`
     ${nu}:hover & {
        transform: ${e=>e.disabled?"none":"scale(1.1)"}; 
     }
+    /* Mobile width setting can override or adjust base width if needed */
+    /* width: 75%; */ /* Example: Slightly wider on mobile */
   }
 `,lg=({bottles:e,onBottleSelect:t,selectedBottle:n})=>{const r=o=>n&&n.id===o.id;return N.jsx(rg,{children:e.map(o=>N.jsx(nu,{selected:r(o),disabled:n!==null,onClick:()=>!n&&t(o),children:N.jsx(og,{src:o.image,alt:o.name,disabled:n!==null})},o.id))})},ig="/threejms-liquorstore/",ug=L.div`
   background: #34495e;
