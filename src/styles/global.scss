@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+/* Local font face */
+@font-face {
+  font-family: 'VT323';
+  src: url('/fonts/VT323-Regular.ttf') format('truetype'); // Vite handles /fonts/
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'VT323', monospace;
+  line-height: 1.4;
+  font-synthesis: none;
+  min-height: 100%;
+}
+
+body {
+  color: #ecf0f1;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+
+  /* Blurred Background Image */
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+
+    background-image: url('/images/bg.png'); // Vite handles /images/
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(5px);
+  }
+} 

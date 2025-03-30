@@ -13,14 +13,14 @@ const ScoreContainer = styled.div`
 const ScoreLabel = styled.span`
   color: #ecf0f1;
   font-size: 18px;
-  font-family: 'Courier New', monospace;
+  font-family: 'VT323', monospace;
 `;
 
 const ScoreValue = styled.span`
   color: #2ecc71;
   font-size: 24px;
   font-weight: bold;
-  font-family: 'Courier New', monospace;
+  font-family: 'VT323', monospace;
 `;
 
 const ScoreBoard = ({ score }) => {

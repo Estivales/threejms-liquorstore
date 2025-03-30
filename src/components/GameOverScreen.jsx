@@ -24,13 +24,13 @@ const GameOverTitle = styled.h1`
   color: ${props => props.isVictory ? '#f1c40f' : '#e74c3c'}; /* Gold title for victory */
   font-size: 48px;
   margin: 0;
-  font-family: 'Courier New', monospace;
+  font-family: 'VT323', monospace;
 `;
 
 const FinalScore = styled.div`
   color: ${props => props.isVictory ? '#ffffff' : '#ecf0f1'}; /* White score for victory */
   font-size: 24px;
-  font-family: 'Courier New', monospace;
+  font-family: 'VT323', monospace;
 `;
 
 const FailInfoContainer = styled.div`
@@ -82,7 +82,7 @@ const Message = styled.div`
   color: ${props => props.isVictory ? '#ffffff' : '#ecf0f1'}; /* White message for victory */
   font-size: 24px; /* Larger font for victory message */
   margin: 10px 0;
-  font-family: 'Courier New', monospace;
+  font-family: 'VT323', monospace;
   font-weight: bold; /* Bold victory message */
 `;
 
@@ -95,7 +95,7 @@ const RestartButton = styled.button`
   font-size: 18px;
   cursor: pointer;
   transition: transform 0.2s, background-color 0.2s;
-  font-family: 'Courier New', monospace;
+  font-family: 'VT323', monospace;
   font-weight: bold;
 
   &:hover {

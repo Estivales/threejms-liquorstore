@@ -25,7 +25,7 @@ const GameTitle = styled.h1`
   color: #ecf0f1;
   font-size: 48px;
   margin: 0;
-  font-family: 'Courier New', monospace;
+  font-family: 'VT323', monospace;
 `;
 
 const StartButton = styled.button`
@@ -37,7 +37,7 @@ const StartButton = styled.button`
   font-size: 24px;
   cursor: pointer;
   transition: transform 0.2s;
-  font-family: 'Courier New', monospace;
+  font-family: 'VT323', monospace;
 
   &:hover {
     transform: scale(1.05);

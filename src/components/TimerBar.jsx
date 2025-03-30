@@ -13,7 +13,7 @@ const TimerContainer = styled.div`
 const TimerText = styled.span`
   color: #ecf0f1;
   font-size: 18px;
-  font-family: 'Courier New', monospace;
+  font-family: 'VT323', monospace;
 `;
 
 const TimerBarContainer = styled.div`

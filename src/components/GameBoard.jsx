@@ -100,7 +100,7 @@ const ConfirmButton = styled.button`
   transition: opacity 0.3s ease-in-out, transform 0.2s;
   opacity: ${props => props.show ? 1 : 0};
   pointer-events: ${props => props.show ? 'auto' : 'none'};
-  font-family: 'Courier New', monospace;
+  font-family: 'VT323', monospace;
   width: 90%;
   max-width: 400px;
 

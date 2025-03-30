@@ -87,20 +87,21 @@ const CustomerName = styled.h2`
   color: #ecf0f1;
   margin: 0;
   font-size: 24px;
-  font-family: 'Courier New', monospace;
+  font-family: 'VT323', monospace;
 `;
 
 const DialogueBox = styled.div`
   background: #FFFFFF;
-  padding: 20px;
+  padding: 15px;
   border-radius: 10px;
   color: #2c3e50;
   font-size: 18px;
   text-align: center;
-  min-width: 300px;
+  min-width: 250px;
+  max-width: 90%;
   position: relative;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  font-family: 'Courier New', monospace;
+  font-family: 'VT323', monospace;
   font-weight: bold;
 
   &::before {
@@ -181,7 +182,7 @@ const DeselectOverlay = styled.div`
   opacity: 0;
   transition: opacity 0.2s;
   border-radius: 8px;
-  font-family: 'Courier New', monospace;
+  font-family: 'VT323', monospace;
 
   ${SelectedBottle}:hover & {
     opacity: 1;
