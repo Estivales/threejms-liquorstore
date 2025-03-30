@@ -66,6 +66,12 @@ export const bottles = [
     name: "Zomoz Espadin Joven",
     type: "mezcal",
     image: `${BASE_URL}bottles/zomoz.png`
+  },
+  {
+    id: 12,
+    name: "Risata Moscato d'Asti",
+    type: "moscato",
+    image: `${BASE_URL}bottles/risata.png`
   }
 ];
 

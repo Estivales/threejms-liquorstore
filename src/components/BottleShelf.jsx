@@ -35,6 +35,39 @@ const ShelfContainer = styled.div`
   }
 `;
 
+const BackgroundWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('${BASE_URL}images/shelf-bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(44, 62, 80, 0.5);
+  }
+`;
+
 const BottleContainer = styled.div`
   width: 310px;
   height: 310px;
@@ -48,22 +81,6 @@ const BottleContainer = styled.div`
   opacity: ${props => props.disabled ? 0.5 : 1};
   position: relative;
   overflow: hidden;
-
-  &::before { // Blurred background
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url('${BASE_URL}images/shelf-bg.png'); /* Use BASE_URL */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: blur(2px);
-    z-index: 0;
-    transition: filter 0.2s ease-in-out; /* Add transition for blur */
-  }
 
   &::after { // Selection overlay
     content: '';
@@ -82,8 +99,8 @@ const BottleContainer = styled.div`
   /* Add hover effects targeting background and image */
   &:hover {
     ${props => !props.disabled && `
-      &::before {
-        filter: blur(4px); /* Increase background blur on hover */
+      ${BottleImage} {
+        transform: scale(1.05);
       }
     `}
   }
@@ -138,6 +155,7 @@ const BottleShelf = ({ bottles, onBottleSelect, selectedBottle }) => {
           disabled={selectedBottle !== null}
           onClick={() => !selectedBottle && onBottleSelect(bottle)}
         >
+          <BackgroundWrapper />
           <BottleImage 
             src={bottle.image} 
             alt={bottle.name} 
