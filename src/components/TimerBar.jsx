@@ -1,19 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const BASE_URL = import.meta.env.BASE_URL;
+
 const TimerContainer = styled.div`
   background: #34495e;
-  padding: 10px 20px;
+  padding: 10px 15px; /* Adjust padding */
   border-radius: 20px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px; /* Adjust gap */
+`;
+
+const TimerIcon = styled.img`
+  width: 20px; /* Set icon size */
+  height: 20px;
+  image-rendering: pixelated; /* Optional for pixel art icons */
 `;
 
 const TimerText = styled.span`
   color: #ecf0f1;
   font-size: 18px;
   font-family: 'VT323', monospace;
+  min-width: 40px; /* Give text some space */
+  text-align: right;
 `;
 
 const TimerBarContainer = styled.div`
@@ -46,6 +56,7 @@ const TimerBar = ({ timeLeft }) => {
       <TimerBarContainer>
         <TimerBarFill timeLeft={timeLeft} />
       </TimerBarContainer>
+      <TimerIcon src={`${BASE_URL}images/time-doctor.webp`} alt="Timer Icon" />
     </TimerContainer>
   );
 };

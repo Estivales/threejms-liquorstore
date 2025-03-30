@@ -43,27 +43,32 @@ const App = () => {
   };
 
   const handleStartGame = () => {
+    console.log("Start Game button clicked");
+    playGenericAudio('start.wav'); // Restore start sound playback here
     setGameState(prev => ({
       ...prev,
       isGameStarted: true
     }));
-    // We can trigger the first dialogue directly here, 
-    // or let the useEffect handle it after the state update.
-    // Let's let the useEffect handle it for consistency.
   };
 
   const handleBottleSelect = (bottle) => {
     // Only allow selection if no bottle is currently selected
     if (!gameState.selectedBottle) {
+      console.log("Bottle selected:", bottle.name); // Log selection
+      playGenericAudio('pickup.wav'); // Play pickup sound
       setGameState(prev => ({
         ...prev,
         selectedBottle: bottle,
         showConfirmButton: true
       }));
+    } else {
+      console.log("Cannot select bottle, another is already selected."); // Log blocked selection
     }
   };
 
   const handleBottleDeselect = () => {
+    console.log("Bottle deselected"); // Log deselection
+    playGenericAudio('remove.wav'); // Play deselect sound
     setGameState(prev => ({
       ...prev,
       selectedBottle: null,
@@ -78,6 +83,8 @@ const App = () => {
     const isCorrect = currentCustomer.expected.includes(gameState.selectedBottle.name);
 
     if (isCorrect) {
+      playGenericAudio('coin.wav'); // Play coin sound first
+      // Optionally add delay here if needed
       playCustomerAudio(currentCustomer.name, 'greet');
       setGameState(prev => ({
         ...prev,
@@ -97,7 +104,11 @@ const App = () => {
         }));
       }, 1000);
     } else {
+      playGenericAudio('wrong.mp3'); // Play generic wrong sound first
+      // Add a small delay if needed to prevent overlap
+      // setTimeout(() => {
       playCustomerAudio(currentCustomer.name, 'fail');
+      // }, 100); // Example delay
       setGameState(prev => ({
         ...prev,
         isGameOver: true,
@@ -125,11 +136,18 @@ const App = () => {
   useEffect(() => {
     // Define the play function
     const playDialogue = () => {
-      const currentCustomer = customers[gameState.currentCustomerIndex];
       // Check conditions *again* when the timeout fires
-      if (currentCustomer && gameState.isGameStarted && !gameState.isGameOver && !gameState.isCustomerLeaving) {
-        console.log('Timeout finished, attempting to play dialogue for:', currentCustomer.name);
-        playCustomerAudio(currentCustomer.name, 'dialogue');
+      if (gameState.isGameStarted && !gameState.isGameOver && !gameState.isCustomerLeaving) {
+        const customerIndex = gameState.currentCustomerIndex;
+        const currentCustomer = customers[customerIndex];
+        
+        if (currentCustomer) { // Check if customer exists at this index
+          // Remove the index check, always play dialogue
+          console.log('Timeout finished, attempting to play dialogue for:', currentCustomer.name);
+          playCustomerAudio(currentCustomer.name, 'dialogue'); 
+        } else {
+          console.log('Timeout finished, but no customer found at index:', customerIndex);
+        }
       } else {
         console.log('Timeout finished, but conditions no longer met for dialogue.');
       }
@@ -138,7 +156,7 @@ const App = () => {
     // Conditions for setting the timeout
     const customerForEffect = customers[gameState.currentCustomerIndex];
     if (gameState.isGameStarted && !gameState.isGameOver && !gameState.isCustomerLeaving && customerForEffect) {
-      console.log('Customer index changed/game started, setting timeout for dialogue:', customerForEffect.name);
+      console.log('Customer index changed/game started, setting timeout for dialogue:', customerForEffect.name); // Update log message
       // Set timeout to match animation
       const dialogueTimer = setTimeout(playDialogue, 1000);
 
@@ -148,6 +166,7 @@ const App = () => {
         clearTimeout(dialogueTimer);
       };
     } else {
+      // Conditions not met log remains the same
       console.log('Conditions not met for setting dialogue timeout on effect run. Index:', gameState.currentCustomerIndex, 'isGameStarted:', gameState.isGameStarted, 'isGameOver:', gameState.isGameOver, 'isCustomerLeaving:', gameState.isCustomerLeaving);
     }
 
@@ -171,7 +190,7 @@ const App = () => {
   useEffect(() => {
     if (gameState.timeLeft <= 0 && !gameState.isGameOver) { // Ensure it only triggers once
       console.log('Time ran out!');
-      playGenericAudio('game-over'); // Play generic game over sound
+      playGenericAudio('game-over.mp3'); // Play generic game over sound
       setGameState(prev => ({
         ...prev,
         isGameOver: true,

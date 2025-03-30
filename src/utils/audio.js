@@ -54,22 +54,28 @@ export const playCustomerAudio = (customerName, type) => {
   }
 };
 
-export const playGenericAudio = (soundName) => {
-  console.log(`Attempting to play generic audio: ${soundName}`);
+export const playGenericAudio = (soundFilenameWithExtension) => {
+  console.log(`Attempting to play generic audio: ${soundFilenameWithExtension}`);
   stopCurrentlyPlaying();
-  const audioPath = `${BASE_URL}audio/${soundName}.mp3`;
+  // Construct path using the full filename provided
+  const audioPath = `${BASE_URL}audio/${soundFilenameWithExtension}`;
+  console.log('Constructed audio path:', audioPath); // Add log for path
   const audio = loadAudio(audioPath);
+  if (!audio) {
+    console.error(`Failed to load audio: ${audioPath}`);
+    return;
+  }
   audio.currentTime = 0;
 
   const playPromise = audio.play();
   if (playPromise !== undefined) {
     playPromise
       .then(() => {
-        console.log(`Successfully playing generic audio: ${soundName}`);
+        console.log(`Successfully playing generic audio: ${soundFilenameWithExtension}`);
         currentlyPlaying = audio;
       })
       .catch(error => {
-        console.error(`Error playing generic audio ${soundName}:`, error);
+        console.error(`Error playing generic audio ${soundFilenameWithExtension}:`, error);
       });
   }
 }; 
