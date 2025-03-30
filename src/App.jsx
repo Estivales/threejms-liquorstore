@@ -228,7 +228,7 @@ const App = () => {
       // to prevent playing on restart from game over.
       if (gameState.currentCustomerIndex === 0 && !gameState.isGameOver && !gameState.isCustomerLeaving) {
           console.log("Game started, playing start sound.");
-          playGenericAudio('start.wav');
+          playGenericAudio('start.m4a');
       }
     }
     // Only depend on isGameStarted to trigger this specific effect
