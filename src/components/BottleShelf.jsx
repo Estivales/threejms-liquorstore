@@ -34,6 +34,7 @@ const ShelfContainer = styled.div`
     border-radius: 0; /* Remove radius on mobile */
     /* Adjust background or styling if needed for mobile */
     justify-content: space-around; /* Evenly space items in row */
+    margin-bottom: 70px;
   }
 `;
 

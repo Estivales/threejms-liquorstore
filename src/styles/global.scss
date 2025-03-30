@@ -3,7 +3,7 @@
 /* Local font face */
 @font-face {
   font-family: 'VT323';
-  src: url('/fonts/VT323-Regular.ttf') format('truetype'); // Vite handles /fonts/
+  src: url('https://cdn.jsdelivr.net/gh/Estivales/threejms-liquorstore@main/public/fonts/VT323-Regular.ttf') format('truetype');// Vite handles /fonts/
   font-weight: 400;
   font-style: normal;
   font-display: block;
@@ -39,7 +39,7 @@ body {
     bottom: 0;
     z-index: -1;
 
-    background-image: url('/images/bg.png'); // Vite handles /images/
+    background-image: url('https://cdn.jsdelivr.net/gh/Estivales/threejms-liquorstore@main/public/images/bg.png'); // Vite handles /images/
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

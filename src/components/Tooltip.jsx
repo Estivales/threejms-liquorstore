@@ -10,6 +10,7 @@ const TooltipContainer = styled.div`
   font-size: 18px;
   z-index: 10;
   white-space: nowrap;
+  font-family: 'VT323', monospace;
 `;
 
 const Tooltip = ({ text, position, onMouseEnter, onMouseLeave }) => {
