@@ -1,3 +1,5 @@
+import { getCdnUrl } from '../utils/getCdnUrl';
+
 const BASE_URL = import.meta.env.BASE_URL;
 
 export const bottles = [
@@ -5,73 +7,73 @@ export const bottles = [
     id: 1,
     name: "Johnnie Walker Blue Label",
     type: "whisky",
-    image: `${BASE_URL}bottles/blue-label.png`
+    image: getCdnUrl('bottles/blue-label.png')
   },
   {
     id: 2,
     name: "Aviation American",
     type: "gin",
-    image: `${BASE_URL}bottles/aviation.png`
+    image: getCdnUrl('bottles/aviation.png')
   },
   {
     id: 3,
     name: "Woodford Reserve Kentucky",
     type: "bourbon",
-    image: `${BASE_URL}bottles/woodford.png`
+    image: getCdnUrl('bottles/woodford.png')
   },
   {
     id: 4,
     name: "Don Julio 70th",
     type: "tequila",
-    image: `${BASE_URL}bottles/don-julio.png`
+    image: getCdnUrl('bottles/don-julio.png')
   },
   {
     id: 5,
     name: "Veuve Clicquot Brut",
     type: "wine",
-    image: `${BASE_URL}bottles/veuve.png`
+    image: getCdnUrl('bottles/veuve.png')
   },
   {
     id: 6,
     name: "Le Portier Shay",
     type: "cognac",
-    image: `${BASE_URL}bottles/le-portier.png`
+    image: getCdnUrl('bottles/le-portier.png')
   },
   {
     id: 7,
     name: "Tito's Handmade",
     type: "vodka",
-    image: `${BASE_URL}bottles/titos.png`
+    image: getCdnUrl('bottles/titos.png')
   },
   {
     id: 8,
     name: "Cedilla Acai",
     type: "liqueur",
-    image: `${BASE_URL}bottles/cedilla.png`
+    image: getCdnUrl('bottles/cedilla.png')
   },
   {
     id: 9,
     name: "Iylia Lager Craft",
     type: "beer",
-    image: `${BASE_URL}bottles/iylia.png`
+    image: getCdnUrl('bottles/iylia.png')
   },
   {
     id: 10,
     name: "Bacardi Superior White",
     type: "rum",
-    image: `${BASE_URL}bottles/bacardi.png`
+    image: getCdnUrl('bottles/bacardi.png')
   },
   {
     id: 11,
     name: "Zomoz Espadin Joven",
     type: "mezcal",
-    image: `${BASE_URL}bottles/zomoz.png`
+    image: getCdnUrl('bottles/zomoz.png')
   },
   {
     id: 12,
     name: "Risata Moscato d'Asti",
     type: "moscato",
-    image: `${BASE_URL}bottles/risata.png`
+    image: getCdnUrl('bottles/risata.png')
   }
 ];
 
@@ -160,7 +162,7 @@ export const customerDialogues = [
 export const customers = customerDialogues.map((dialogue, index) => ({
   id: index + 1,
   name: dialogue.customer,
-  avatar: `${BASE_URL}customers/${dialogue.customer.toLowerCase()}.png`,
+  avatar: getCdnUrl(`customers/${dialogue.customer.toLowerCase()}.png`),
   timeLimit: 15,
   dialogue: dialogue.dialogue,
   expected: dialogue.expected,

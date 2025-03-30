@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
+import { getCdnUrl } from '../utils/getCdnUrl';
 
 const fadeIn = keyframes`
   from { opacity: 0; transform: scale(0.9); }
@@ -120,7 +121,7 @@ const GameOverScreen = ({ score, onRestart, reason, lastCustomer }) => {
 
   const getFailAvatar = () => {
     if (isTimeOut) {
-      return '/threejms-liquorstore//customers/amel.png'; // Specific avatar for timeout
+      return getCdnUrl('customers/amel.png'); // Specific avatar for timeout
     }
     if (isWrongAnswer && lastCustomer) {
       return lastCustomer.avatar;

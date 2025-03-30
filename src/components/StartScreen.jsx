@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { getCdnUrl } from '../utils/getCdnUrl';
 
 const BASE_URL = import.meta.env.BASE_URL;
 
@@ -47,7 +48,7 @@ const StartButton = styled.button`
 const StartScreen = ({ onStart }) => {
   return (
     <StartScreenContainer>
-      <LogoImage src={`${BASE_URL}images/logo.png`} alt="3JMS Liquor Store Logo" />
+      <LogoImage src={getCdnUrl('images/logo.png')} alt="3JMS Liquor Store Logo" />
       <GameTitle>3JMS Liquor Store</GameTitle>
       <StartButton onClick={onStart}>Start Serving!</StartButton>
     </StartScreenContainer>

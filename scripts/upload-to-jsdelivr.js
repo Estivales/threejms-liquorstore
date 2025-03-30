@@ -10,12 +10,19 @@ const __dirname = dirname(__filename);
 const GITHUB_USERNAME = 'Estivales'; // Updated to correct GitHub username
 const REPO_NAME = 'threejms-liquorstore'; // Replace with your repo name
 const BRANCH = 'main'; // Replace with your default branch
-const STATIC_DIR = path.join(__dirname, '../public/images'); // Path to your static assets
+
+// Define multiple static directories
+const STATIC_DIRS = [
+  path.join(__dirname, '../public/images'),
+  path.join(__dirname, '../public/customers'),
+  path.join(__dirname, '../public/bottles')
+];
 
 // Function to get jsDelivr URL
-const getJsDelivrUrl = (filePath) => {
-  const relativePath = path.relative(STATIC_DIR, filePath);
-  return `https://cdn.jsdelivr.net/gh/${GITHUB_USERNAME}/${REPO_NAME}@${BRANCH}/public/images/${relativePath}`;
+const getJsDelivrUrl = (filePath, baseDir) => {
+  const relativePath = path.relative(baseDir, filePath);
+  const dirName = path.basename(baseDir);
+  return `https://cdn.jsdelivr.net/gh/${GITHUB_USERNAME}/${REPO_NAME}@${BRANCH}/public/${dirName}/${relativePath}`;
 };
 
 // Function to process all files in directory
@@ -29,7 +36,7 @@ const processDirectory = (dir) => {
     if (stat.isDirectory()) {
       processDirectory(fullPath);
     } else {
-      const jsDelivrUrl = getJsDelivrUrl(fullPath);
+      const jsDelivrUrl = getJsDelivrUrl(fullPath, dir);
       console.log(`File: ${file}`);
       console.log(`jsDelivr URL: ${jsDelivrUrl}\n`);
     }
@@ -38,7 +45,11 @@ const processDirectory = (dir) => {
 
 // Main execution
 console.log('Generating jsDelivr URLs for static assets...\n');
-processDirectory(STATIC_DIR);
+STATIC_DIRS.forEach(dir => {
+  if (fs.existsSync(dir)) {
+    processDirectory(dir);
+  }
+});
 
 // Create a mapping file
 const createMappingFile = () => {
@@ -54,13 +65,18 @@ const createMappingFile = () => {
       if (stat.isDirectory()) {
         addToMapping(fullPath);
       } else {
-        const relativePath = path.relative(STATIC_DIR, fullPath);
-        mapping[relativePath] = getJsDelivrUrl(fullPath);
+        const relativePath = path.relative(dir, fullPath);
+        const dirName = path.basename(dir);
+        mapping[`${dirName}/${relativePath}`] = getJsDelivrUrl(fullPath, dir);
       }
     });
   };
   
-  addToMapping(STATIC_DIR);
+  STATIC_DIRS.forEach(dir => {
+    if (fs.existsSync(dir)) {
+      addToMapping(dir);
+    }
+  });
   
   // Write mapping to file
   fs.writeFileSync(
