@@ -82,6 +82,10 @@ This project is configured for deployment to GitHub Pages.
 -   React
 -   Vite
 -   Styled-Components
+-   Cursor for coding
+-   GPT for images
+-   ElevenLabs for audio dialogues
+-   freesound.org for sound effects
 
 ## License
 
