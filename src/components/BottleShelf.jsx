@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { getCdnUrl } from '../utils/getCdnUrl';
 
 const BASE_URL = import.meta.env.BASE_URL;
 
@@ -51,7 +52,7 @@ const BackgroundWrapper = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url('${BASE_URL}images/shelf-bg.png');
+    background-image: url('${getCdnUrl('images/shelf-bg.png')}');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
