@@ -213,6 +213,7 @@ Error generating stack: `+l.message+`
   font-size: 18px;
   z-index: 10;
   white-space: nowrap;
+  font-family: 'VT323', monospace;
 `,lg=({text:e,position:t,onMouseEnter:n,onMouseLeave:r})=>T.jsx(og,{style:{top:t.y,left:t.x},onMouseEnter:n,onMouseLeave:r,children:e}),ig=j.div`
   /* background: #2c3e50; */ /* Remove solid background */
   /* background-image: url('/images/shelf-default.png'); */ /* Remove background image */
@@ -242,6 +243,7 @@ Error generating stack: `+l.message+`
     border-radius: 0; /* Remove radius on mobile */
     /* Adjust background or styling if needed for mobile */
     justify-content: space-around; /* Evenly space items in row */
+    margin-bottom: 70px;
   }
 `,ug=j.div`
   position: absolute;
