@@ -29,8 +29,8 @@ const CustomerContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
-  padding: 20px;
+  gap: 15px;
+  padding: 15px;
   background-image: url('${BASE_URL}images/liquorstore-bg.png');
   background-size: cover;
   background-position: center;
@@ -38,7 +38,9 @@ const CustomerContainer = styled.div`
   border-radius: 10px;
   position: relative;
   z-index: 1;
-  min-height: 630px;
+  flex-grow: 1;
+  overflow-y: auto;
+  min-height: 0;
 
   &::before {
     content: '';
@@ -50,6 +52,15 @@ const CustomerContainer = styled.div`
     background: rgba(44, 62, 80, 0.5);
     border-radius: 10px;
     z-index: -1;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 10px;
+    gap: 10px;
+    border-radius: 0;
+     &::before { 
+        border-radius: 0;
+     }
   }
 `;
 
@@ -63,6 +74,13 @@ const CustomerAvatar = styled.img`
   object-fit: contain;
   padding: 5px;
   animation: ${props => props.isLeaving ? slideOut : slideIn} 1s ease;
+  flex-shrink: 0;
+
+  @media (max-width: 768px) {
+    width: 120px;
+    height: 120px;
+    border-width: 3px;
+  }
 `;
 
 const CustomerName = styled.h2`
@@ -94,6 +112,12 @@ const DialogueBox = styled.div`
     border-right: 10px solid transparent;
     border-bottom: 10px solid #FFFFFF;
   }
+
+  @media (max-width: 768px) {
+     font-size: 16px;
+     padding: 10px;
+     min-width: 200px;
+  }
 `;
 
 const SelectedBottle = styled.div`
@@ -113,6 +137,12 @@ const SelectedBottle = styled.div`
   &:hover {
     /* background-color: #e74c3c; */
   }
+
+  @media (max-width: 768px) {
+     padding: 5px;
+     gap: 10px;
+     min-height: 100px;
+  }
 `;
 
 const BottleImage = styled.img`
@@ -123,6 +153,11 @@ const BottleImage = styled.img`
   image-rendering: pixelated;
   border-radius: 5px;
   object-fit: contain;
+
+  @media (max-width: 768px) {
+    max-width: 80px;
+    max-height: 80px;
+  }
 `;
 
 const BottleName = styled.span`

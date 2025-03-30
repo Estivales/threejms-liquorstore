@@ -27,6 +27,12 @@ const ShelfContainer = styled.div`
       background: rgba(0, 0, 0, 0.4); /* Make hover slightly darker/less transparent */
     }
   }
+
+  @media (max-width: 768px) {
+    border-radius: 0; /* Remove radius on mobile */
+    /* Adjust background or styling if needed for mobile */
+    justify-content: space-around; /* Evenly space items in row */
+  }
 `;
 
 const BottleContainer = styled.div`
@@ -81,6 +87,17 @@ const BottleContainer = styled.div`
       }
     `}
   }
+
+  @media (max-width: 768px) {
+    width: 150px; /* Smaller size for mobile */
+    height: 150px;
+    margin: 5px; /* Add some margin for spacing */
+  }
+
+  @media (max-width: 480px) {
+     width: 120px; /* Even smaller size for very small screens */
+     height: 120px;
+  }
 `;
 
 const BottleImage = styled.img`
@@ -96,6 +113,13 @@ const BottleImage = styled.img`
   ${BottleContainer}:hover & {
     /* Apply scale only if the parent container is not disabled */
     transform: ${props => props.disabled ? 'none' : 'scale(1.05)'};
+  }
+
+  @media (max-width: 768px) {
+    /* Adjust hover scale if needed for smaller items */
+    ${BottleContainer}:hover & {
+       transform: ${props => props.disabled ? 'none' : 'scale(1.1)'}; 
+    }
   }
 `;
 

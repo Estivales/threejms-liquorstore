@@ -120,7 +120,7 @@ const GameOverScreen = ({ score, onRestart, reason, lastCustomer }) => {
 
   const getFailAvatar = () => {
     if (isTimeOut) {
-      return '/customers/amel.png'; // Specific avatar for timeout
+      return '/threejms-liquorstore//customers/amel.png'; // Specific avatar for timeout
     }
     if (isWrongAnswer && lastCustomer) {
       return lastCustomer.avatar;
