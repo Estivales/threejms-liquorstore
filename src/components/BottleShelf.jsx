@@ -41,7 +41,7 @@ const BottleContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   cursor: pointer;
   background-color: transparent;
   pointer-events: ${props => props.disabled ? 'none' : 'auto'};
@@ -101,17 +101,16 @@ const BottleContainer = styled.div`
 `;
 
 const BottleImage = styled.img`
-  max-width: 100%;
-  max-height: 100%;
+  /* max-width: 100%; */ /* Remove max-width */
+  width: 67%; /* Set width to 67% of container */
+  max-height: 100%; /* Keep max-height limit */
   object-fit: contain;
   image-rendering: pixelated;
   position: relative;
   z-index: 1;
-  transition: transform 0.2s ease-in-out; /* Add transition for scale */
+  transition: transform 0.2s ease-in-out;
 
-  /* Add scale effect on parent hover */
   ${BottleContainer}:hover & {
-    /* Apply scale only if the parent container is not disabled */
     transform: ${props => props.disabled ? 'none' : 'scale(1.05)'};
   }
 
@@ -120,6 +119,8 @@ const BottleImage = styled.img`
     ${BottleContainer}:hover & {
        transform: ${props => props.disabled ? 'none' : 'scale(1.1)'}; 
     }
+    /* Mobile width setting can override or adjust base width if needed */
+    /* width: 75%; */ /* Example: Slightly wider on mobile */
   }
 `;
 
