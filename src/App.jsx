@@ -203,7 +203,7 @@ const App = () => {
   useEffect(() => {
     if (!gameState.isGameOver && gameState.currentCustomerIndex >= customers.length) {
       console.log("Victory!");
-      playGenericAudio('congratulations'); // Play victory sound
+      playGenericAudio('congratulations.mp3'); // Play victory sound
       setGameState(prev => ({
         ...prev,
         isGameOver: true,
