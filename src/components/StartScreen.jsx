@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const BASE_URL = import.meta.env.BASE_URL;
+
 const StartScreenContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -45,7 +47,7 @@ const StartButton = styled.button`
 const StartScreen = ({ onStart }) => {
   return (
     <StartScreenContainer>
-      <LogoImage src="/images/logo.png" alt="3JMS Liquor Store Logo" />
+      <LogoImage src={`${BASE_URL}images/logo.png`} alt="3JMS Liquor Store Logo" />
       <GameTitle>3JMS Liquor Store</GameTitle>
       <StartButton onClick={onStart}>Start Serving!</StartButton>
     </StartScreenContainer>

@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const BASE_URL = import.meta.env.BASE_URL;
+
 const ShelfContainer = styled.div`
   /* background: #2c3e50; */ /* Remove solid background */
   /* background-image: url('/images/shelf-default.png'); */ /* Remove background image */
@@ -48,7 +50,7 @@ const BottleContainer = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url('/images/shelf-bg.png');
+    background-image: url('${BASE_URL}images/shelf-bg.png'); /* Use BASE_URL */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

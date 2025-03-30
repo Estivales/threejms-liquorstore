@@ -1,5 +1,6 @@
 const audioCache = new Map();
 let currentlyPlaying = null;
+const BASE_URL = import.meta.env.BASE_URL;
 
 const stopCurrentlyPlaying = () => {
   if (currentlyPlaying) {
@@ -36,7 +37,7 @@ const loadAudio = (path) => {
 export const playCustomerAudio = (customerName, type) => {
   console.log(`Attempting to play audio for ${customerName} ${type}`);
   stopCurrentlyPlaying();
-  const audioPath = `/audio/${customerName.toLowerCase()}-${type}.mp3`;
+  const audioPath = `${BASE_URL}audio/${customerName.toLowerCase()}-${type}.mp3`;
   const audio = loadAudio(audioPath);
   audio.currentTime = 0;
   
@@ -56,7 +57,7 @@ export const playCustomerAudio = (customerName, type) => {
 export const playGenericAudio = (soundName) => {
   console.log(`Attempting to play generic audio: ${soundName}`);
   stopCurrentlyPlaying();
-  const audioPath = `/audio/${soundName}.mp3`;
+  const audioPath = `${BASE_URL}audio/${soundName}.mp3`;
   const audio = loadAudio(audioPath);
   audio.currentTime = 0;
 

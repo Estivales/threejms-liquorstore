@@ -1,6 +1,8 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
+const BASE_URL = import.meta.env.BASE_URL;
+
 const slideIn = keyframes`
   from {
     transform: translateX(-100%);
@@ -29,7 +31,7 @@ const CustomerContainer = styled.div`
   align-items: center;
   gap: 20px;
   padding: 20px;
-  background-image: url('/images/liquorstore-bg.png');
+  background-image: url('${BASE_URL}images/liquorstore-bg.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

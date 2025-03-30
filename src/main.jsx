@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { createGlobalStyle } from 'styled-components';
 
+const BASE_URL = import.meta.env.BASE_URL;
+
 const GlobalStyle = createGlobalStyle`
   /* Remove Google Font import */
   /* @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap'); */
@@ -53,7 +55,7 @@ const GlobalStyle = createGlobalStyle`
     bottom: 0;
     z-index: -1; /* Place behind all other content */
 
-    background-image: url('/images/bg.png');
+    background-image: url('${BASE_URL}images/bg.png'); /* Use BASE_URL */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
