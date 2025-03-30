@@ -21,7 +21,7 @@ const App = () => {
     score: 0,
     isGameOver: false,
     selectedBottle: null,
-    timeLeft: 60,
+    timeLeft: 30,
     showConfirmButton: false,
     isCustomerLeaving: false,
     isGameStarted: false,
@@ -34,7 +34,7 @@ const App = () => {
       score: 0,
       isGameOver: false,
       selectedBottle: null,
-      timeLeft: 60,
+      timeLeft: 30,
       showConfirmButton: false,
       isCustomerLeaving: false,
       isGameStarted: true,
@@ -44,7 +44,6 @@ const App = () => {
 
   const handleStartGame = () => {
     console.log("Start Game button clicked");
-    playGenericAudio('start.wav'); // Restore start sound playback here
     setGameState(prev => ({
       ...prev,
       isGameStarted: true
@@ -52,23 +51,28 @@ const App = () => {
   };
 
   const handleBottleSelect = (bottle) => {
-    // Only allow selection if no bottle is currently selected
-    if (!gameState.selectedBottle) {
-      console.log("Bottle selected:", bottle.name); // Log selection
-      playGenericAudio('pickup.wav'); // Play pickup sound
+    // Only allow selection if no bottle is currently selected OR if customer is leaving
+    if (!gameState.selectedBottle && !gameState.isCustomerLeaving) {
+      console.log("Bottle selected:", bottle.name);
+      playGenericAudio('pickup.wav');
       setGameState(prev => ({
         ...prev,
         selectedBottle: bottle,
         showConfirmButton: true
       }));
     } else {
-      console.log("Cannot select bottle, another is already selected."); // Log blocked selection
+      console.log("Cannot select bottle, another is already selected or customer is leaving.");
     }
   };
 
   const handleBottleDeselect = () => {
-    console.log("Bottle deselected"); // Log deselection
-    playGenericAudio('remove.wav'); // Play deselect sound
+    // Prevent deselecting while customer is leaving
+    if (gameState.isCustomerLeaving) {
+      console.log("Cannot deselect while customer is leaving.");
+      return;
+    }
+    console.log("Bottle deselected");
+    playGenericAudio('remove.wav');
     setGameState(prev => ({
       ...prev,
       selectedBottle: null,
@@ -77,38 +81,42 @@ const App = () => {
   };
 
   const handleConfirm = () => {
-    if (!gameState.selectedBottle) return; // Prevent confirming without selection
+    // Prevent multiple confirms or confirming while leaving
+    if (gameState.isCustomerLeaving || !gameState.selectedBottle) {
+      console.log("Confirm blocked: Already leaving or no bottle selected.")
+      return; 
+    }
 
     const currentCustomer = customers[gameState.currentCustomerIndex];
     const isCorrect = currentCustomer.expected.includes(gameState.selectedBottle.name);
 
     if (isCorrect) {
-      playGenericAudio('coin.wav'); // Play coin sound first
-      // Optionally add delay here if needed
+      console.log("Correct answer confirmed for", currentCustomer.name);
+      playGenericAudio('coin.wav');
       playCustomerAudio(currentCustomer.name, 'greet');
+      
+      // Update state immediately: start leaving, clear selection
       setGameState(prev => ({
         ...prev,
-        score: prev.score + 1,
-        isCustomerLeaving: true
+        isCustomerLeaving: true,
+        selectedBottle: null, 
+        showConfirmButton: false
       }));
 
-      // Wait for leaving animation before showing next customer
+      // Wait for leaving animation before updating score/index and resetting leaving state
       setTimeout(() => {
         setGameState(prev => ({
           ...prev,
+          score: prev.score + 1,
           currentCustomerIndex: prev.currentCustomerIndex + 1,
-          selectedBottle: null,
-          showConfirmButton: false,
-          timeLeft: 60,
+          timeLeft: 30,
           isCustomerLeaving: false
         }));
-      }, 1000);
+      }, 1000); 
     } else {
-      playGenericAudio('wrong.mp3'); // Play generic wrong sound first
-      // Add a small delay if needed to prevent overlap
-      // setTimeout(() => {
+      console.log("Incorrect answer confirmed for", currentCustomer.name);
+      playGenericAudio('wrong.mp3'); 
       playCustomerAudio(currentCustomer.name, 'fail');
-      // }, 100); // Example delay
       setGameState(prev => ({
         ...prev,
         isGameOver: true,
@@ -123,7 +131,7 @@ const App = () => {
       score: 0,
       isGameOver: false,
       selectedBottle: null,
-      timeLeft: 60,
+      timeLeft: 30,
       showConfirmButton: false,
       isCustomerLeaving: false,
       isGameStarted: false,
@@ -212,6 +220,19 @@ const App = () => {
     }
     // Add isGameOver to dependencies to prevent triggering sound after restart
   }, [gameState.currentCustomerIndex, customers.length, gameState.isGameOver]);
+
+  // Play start sound when game starts
+  useEffect(() => {
+    if (gameState.isGameStarted) {
+      // Check if this is the *first* time the game is starting (index 0)
+      // to prevent playing on restart from game over.
+      if (gameState.currentCustomerIndex === 0 && !gameState.isGameOver && !gameState.isCustomerLeaving) {
+          console.log("Game started, playing start sound.");
+          playGenericAudio('start.wav');
+      }
+    }
+    // Only depend on isGameStarted to trigger this specific effect
+  }, [gameState.isGameStarted]);
 
   // Get the customer object based on the current index
   const customerForBoard = customers[gameState.currentCustomerIndex];
