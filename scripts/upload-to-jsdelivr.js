@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Configuration
-const GITHUB_USERNAME = 'douglasestivales'; // Replace with your GitHub username
+const GITHUB_USERNAME = 'Estivales'; // Updated to correct GitHub username
 const REPO_NAME = 'threejms-liquorstore'; // Replace with your repo name
 const BRANCH = 'main'; // Replace with your default branch
 const STATIC_DIR = path.join(__dirname, '../public/images'); // Path to your static assets
