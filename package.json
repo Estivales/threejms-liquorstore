@@ -1,14 +1,21 @@
 {
   "name": "threejms-liquorstore",
+  "homepage": "https://Estivales.github.io/threejms-liquorstore",
   "version": "1.0.0",
   "description": "A pixel art liquor store game",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
-  "keywords": ["game", "react", "pixel-art"],
+  "keywords": [
+    "game",
+    "react",
+    "pixel-art"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -18,6 +25,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",
+    "gh-pages": "^6.1.1",
     "vite": "^5.0.12"
   }
 }
