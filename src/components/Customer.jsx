@@ -36,7 +36,7 @@ const CustomerContainer = styled.div`
   border-radius: 10px;
   position: relative;
   z-index: 1;
-  min-height: 70vh;
+  min-height: 630px;
 
   &::before {
     content: '';
@@ -52,8 +52,8 @@ const CustomerContainer = styled.div`
 `;
 
 const CustomerAvatar = styled.img`
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   image-rendering: pixelated;
   border-radius: 10px;
   border: 4px solid #3498db;

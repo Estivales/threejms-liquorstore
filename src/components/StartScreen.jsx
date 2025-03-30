@@ -13,6 +13,12 @@ const StartScreenContainer = styled.div`
   text-align: center;
 `;
 
+const LogoImage = styled.img`
+  width: 200px; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+  margin-bottom: 20px; /* Space below logo */
+`;
+
 const GameTitle = styled.h1`
   color: #ecf0f1;
   font-size: 48px;
@@ -39,6 +45,7 @@ const StartButton = styled.button`
 const StartScreen = ({ onStart }) => {
   return (
     <StartScreenContainer>
+      <LogoImage src="/images/logo.png" alt="3JMS Liquor Store Logo" />
       <GameTitle>3JMS Liquor Store</GameTitle>
       <StartButton onClick={onStart}>Start Serving!</StartButton>
     </StartScreenContainer>

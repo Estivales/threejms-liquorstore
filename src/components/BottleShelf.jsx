@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ShelfContainer = styled.div`
-  background: #2c3e50; /* Restore solid background */
+  /* background: #2c3e50; */ /* Remove solid background */
   /* background-image: url('/images/shelf-default.png'); */ /* Remove background image */
   /* background-repeat: repeat; */
   /* background-size: 1000px 1000px; */
@@ -17,12 +17,12 @@ const ShelfContainer = styled.div`
     width: 8px;
   }
   &::-webkit-scrollbar-track {
-    background: #2c3e50; /* Match restored background */
+    background: rgba(52, 73, 94, 0.8); /* Change #34495e to rgba with 80% opacity */
   }
   &::-webkit-scrollbar-thumb {
-    background: #34495e; 
+    background: rgba(0, 0, 0, 0.2); /* Swap color from track */
     &:hover {
-      background: #3498db;
+      background: rgba(0, 0, 0, 0.4); /* Make hover slightly darker/less transparent */
     }
   }
 `;
@@ -35,18 +35,27 @@ const BottleContainer = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  /* transition: transform 0.2s; */ /* No transition needed here now */
-  background-image: url('/images/shelf-bg.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: transparent;
   pointer-events: ${props => props.disabled ? 'none' : 'auto'};
   opacity: ${props => props.disabled ? 0.5 : 1};
   position: relative;
   overflow: hidden;
 
-  /* Remove direct hover transform */
-  /* &:hover { ... } */
+  &::before { // Blurred background
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/images/shelf-bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(2px);
+    z-index: 0;
+    transition: filter 0.2s ease-in-out; /* Add transition for blur */
+  }
 
   &::after { // Selection overlay
     content: '';
@@ -59,6 +68,16 @@ const BottleContainer = styled.div`
     opacity: ${props => props.selected ? 1 : 0};
     transition: opacity 0.2s ease-in-out;
     pointer-events: none;
+    z-index: 2;
+  }
+
+  /* Add hover effects targeting background and image */
+  &:hover {
+    ${props => !props.disabled && `
+      &::before {
+        filter: blur(4px); /* Increase background blur on hover */
+      }
+    `}
   }
 `;
 
@@ -67,34 +86,14 @@ const BottleImage = styled.img`
   max-height: 100%;
   object-fit: contain;
   image-rendering: pixelated;
-  /* Remove hover transition/transform */
-  /* transition: transform 0.2s ease-in-out; */
-  /* ${BottleContainer}:hover & { ... } */
-`;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.2s ease-in-out; /* Add transition for scale */
 
-// New component for the hover message
-const HoverMessage = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Courier New', monospace;
-  font-size: 24px;
-  font-weight: bold;
-  opacity: 0; /* Hidden by default */
-  transition: opacity 0.2s ease-in-out;
-  pointer-events: none; /* Let clicks pass through */
-  z-index: 5; /* Ensure it's above the image but below container hover effect if any */
-
-  /* Show on hover of the parent container */
+  /* Add scale effect on parent hover */
   ${BottleContainer}:hover & {
-    opacity: ${props => props.disabled ? 0 : 1}; /* Only show if not disabled */
+    /* Apply scale only if the parent container is not disabled */
+    transform: ${props => props.disabled ? 'none' : 'scale(1.05)'};
   }
 `;
 
@@ -110,10 +109,13 @@ const BottleShelf = ({ bottles, onBottleSelect, selectedBottle }) => {
           key={bottle.id}
           selected={isBottleSelected(bottle)}
           disabled={selectedBottle !== null}
-          onClick={() => !selectedBottle && onBottleSelect(bottle)} // Prevent click if disabled
+          onClick={() => !selectedBottle && onBottleSelect(bottle)}
         >
-          <BottleImage src={bottle.image} alt={bottle.name} />
-          <HoverMessage disabled={selectedBottle !== null}>Pick</HoverMessage> {/* Add the message */} 
+          <BottleImage 
+            src={bottle.image} 
+            alt={bottle.name} 
+            disabled={selectedBottle !== null} 
+          />
         </BottleContainer>
       ))}
     </ShelfContainer>

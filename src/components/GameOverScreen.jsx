@@ -1,8 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const fadeIn = keyframes`
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+`;
 
 const GameOverContainer = styled.div`
-  background: #34495e;
+  background: ${props => props.isVictory ? '#27ae60' : '#34495e'}; /* Green background for victory */
   padding: 40px;
   border-radius: 20px;
   display: flex;
@@ -10,19 +15,20 @@ const GameOverContainer = styled.div`
   align-items: center;
   gap: 20px;
   text-align: center;
-  animation: fadeIn 0.5s ease;
-  max-width: 600px; /* Optional: limit width */
+  animation: ${fadeIn} 0.5s ease;
+  max-width: 600px;
+  border: 5px solid ${props => props.isVictory ? '#f1c40f' : 'transparent'}; /* Gold border for victory */
 `;
 
 const GameOverTitle = styled.h1`
-  color: ${props => props.isVictory ? '#2ecc71' : '#e74c3c'};
+  color: ${props => props.isVictory ? '#f1c40f' : '#e74c3c'}; /* Gold title for victory */
   font-size: 48px;
   margin: 0;
   font-family: 'Courier New', monospace;
 `;
 
 const FinalScore = styled.div`
-  color: #ecf0f1;
+  color: ${props => props.isVictory ? '#ffffff' : '#ecf0f1'}; /* White score for victory */
   font-size: 24px;
   font-family: 'Courier New', monospace;
 `;
@@ -73,22 +79,24 @@ const FailDialogueBox = styled.div`
 `;
 
 const Message = styled.div`
-  color: #ecf0f1;
-  font-size: 18px;
+  color: ${props => props.isVictory ? '#ffffff' : '#ecf0f1'}; /* White message for victory */
+  font-size: 24px; /* Larger font for victory message */
   margin: 10px 0;
   font-family: 'Courier New', monospace;
+  font-weight: bold; /* Bold victory message */
 `;
 
 const RestartButton = styled.button`
-  background: #2ecc71;
-  color: white;
+  background: ${props => props.isVictory ? '#f1c40f' : '#2ecc71'}; /* Gold button for victory */
+  color: ${props => props.isVictory ? '#2c3e50' : 'white'}; /* Dark text on gold */
   border: none;
   padding: 15px 30px;
   border-radius: 10px;
   font-size: 18px;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.2s, background-color 0.2s;
   font-family: 'Courier New', monospace;
+  font-weight: bold;
 
   &:hover {
     transform: scale(1.05);
@@ -123,11 +131,11 @@ const GameOverScreen = ({ score, onRestart, reason, lastCustomer }) => {
   const failAvatarSrc = getFailAvatar();
 
   return (
-    <GameOverContainer>
+    <GameOverContainer isVictory={isVictory}>
       <GameOverTitle isVictory={isVictory}>
-        {isVictory ? 'Victory!' : 'Game Over!'}
+        {isVictory ? 'Congratulations!' : 'Game Over!'}
       </GameOverTitle>
-      <FinalScore>Final Score: {score}</FinalScore>
+      <FinalScore isVictory={isVictory}>Final Score: {score}</FinalScore>
 
       {!isVictory && (
         <FailInfoContainer>
@@ -144,12 +152,12 @@ const GameOverScreen = ({ score, onRestart, reason, lastCustomer }) => {
       )}
 
       {isVictory && (
-        <Message>
-          Congratulations! You served all customers successfully!
+        <Message isVictory={isVictory}>
+          You served all customers successfully!
         </Message>
       )}
       
-      <RestartButton onClick={onRestart}>
+      <RestartButton onClick={onRestart} isVictory={isVictory}>
         Play Again
       </RestartButton>
     </GameOverContainer>

@@ -123,11 +123,20 @@ export const customerDialogues = [
     failDialogue: "My wild night is ruined! Wrong bottles."
   },
   {
-    customer: "Wissem",
+    customer: "Khalil",
     type: "byDrink",
     dialogue: "I wanna make a Cuba Libre. Give me what I need.",
     expected: ["Bacardi Superior White"],
     failDialogue: "Can't make a Cuba Libre with that!"
+  },
+  {
+    customer: "Wissem",
+    type: "byDrink",
+    dialogue: "I need the stuff for a Dirty Martini.",
+    greet: "Thanks!",
+    fail: "I can't make a martini with that.",
+    expected: ["Aviation American"],
+    failDialogue: "That won't make my martini dirty... or right."
   },
   {
     customer: "Amel",
@@ -138,36 +147,6 @@ export const customerDialogues = [
     expected: ["Le Portier Shay"],
     failDialogue: "Uh uh, not what I asked for."
   },
-  {
-    customer: "Khalil",
-    type: "byDrink",
-    dialogue: "I need the stuff for a Dirty Martini.",
-    greet: "Thanks!",
-    fail: "I can't make a martini with that.",
-    expected: ["Aviation American"],
-    failDialogue: "That won't make my martini dirty... or right."
-  },
-  {
-    customer: "Narsi",
-    type: "byDrink",
-    dialogue: "I'm in the mood for a Paloma... you know what goes in it?",
-    expected: ["Don Julio 70th"],
-    failDialogue: "Nope, that's not for a Paloma."
-  },
-  {
-    customer: "Kristin",
-    type: "byDrink",
-    dialogue: "Can you prep me for a Negroni, if you've got the ingredients?",
-    expected: ["Aviation American"],
-    failDialogue: "Can't make a Negroni like that..."
-  },
-  {
-    customer: "Azra",
-    type: "byDrink",
-    dialogue: "Just give me what I need for a Moscow Mule.",
-    expected: ["Tito's Handmade"],
-    failDialogue: "My mule won't kick with this!"
-  }
 ];
 
 export const customers = customerDialogues.map((dialogue, index) => ({

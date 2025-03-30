@@ -106,6 +106,21 @@ const App = () => {
     }
   };
 
+  const resetToStartScreen = () => {
+    setGameState({
+      currentCustomerIndex: 0,
+      score: 0,
+      isGameOver: false,
+      selectedBottle: null,
+      timeLeft: 60,
+      showConfirmButton: false,
+      isCustomerLeaving: false,
+      isGameStarted: false,
+      gameOverReason: null
+    });
+    // Stop any lingering audio? Maybe not needed if handled by play functions.
+  };
+
   // Play dialogue when customer appears
   useEffect(() => {
     // Define the play function
@@ -167,14 +182,27 @@ const App = () => {
 
   // Victory condition effect
   useEffect(() => {
-    if (gameState.currentCustomerIndex >= customers.length) {
+    if (!gameState.isGameOver && gameState.currentCustomerIndex >= customers.length) {
+      console.log("Victory!");
+      playGenericAudio('congratulations'); // Play victory sound
       setGameState(prev => ({
         ...prev,
         isGameOver: true,
-        gameOverReason: 'victory' // Set reason
+        gameOverReason: 'victory'
       }));
     }
-  }, [gameState.currentCustomerIndex]);
+    // Add isGameOver to dependencies to prevent triggering sound after restart
+  }, [gameState.currentCustomerIndex, customers.length, gameState.isGameOver]);
+
+  // Get the customer object based on the current index
+  const customerForBoard = customers[gameState.currentCustomerIndex];
+
+  // Determine the customer relevant for the Game Over screen
+  let customerForGameOver = null;
+  if (gameState.gameOverReason === 'wrongAnswer' || gameState.gameOverReason === 'timeOut') {
+      // If game ended on wrong answer or timeout, use the current index
+      customerForGameOver = customers[gameState.currentCustomerIndex];
+  } // For 'victory', lastCustomer is not displayed in the same way
 
   return (
     <AppContainer>
@@ -183,20 +211,23 @@ const App = () => {
       ) : gameState.isGameOver ? (
         <GameOverScreen 
           score={gameState.score} 
-          onRestart={startNewGame}
-          isVictory={gameState.gameOverReason === 'victory'}
+          onRestart={resetToStartScreen}
           reason={gameState.gameOverReason}
-          lastCustomer={customers[gameState.currentCustomerIndex]}
+          // Pass the customer who was active during the fail, if applicable
+          lastCustomer={customerForGameOver} 
         />
-      ) : (
+      ) : customerForBoard ? (
         <GameBoard 
           gameState={gameState}
           onBottleSelect={handleBottleSelect}
           onBottleDeselect={handleBottleDeselect}
           onConfirm={handleConfirm}
           bottles={bottles}
-          currentCustomer={customers[gameState.currentCustomerIndex]}
+          currentCustomer={customerForBoard} // Pass the valid customer object
         />
+      ) : (
+        // Render null or loading indicator briefly while state transitions to GameOver
+        null 
       )}
     </AppContainer>
   );
