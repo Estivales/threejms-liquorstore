@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { getCdnUrl } from '../utils/getCdnUrl';
+import Tooltip from './Tooltip';
 
 const BASE_URL = import.meta.env.BASE_URL;
 
@@ -143,6 +144,39 @@ const BottleImage = styled.img`
 `;
 
 const BottleShelf = ({ bottles, onBottleSelect, selectedBottle }) => {
+  const [tooltip, setTooltip] = useState({ visible: false, text: '', position: { x: 0, y: 0 } });
+  const [isTooltipHovered, setIsTooltipHovered] = useState(false); // Track if tooltip is hovered
+
+  const handleMouseEnter = (e, name) => {
+    const target = e.currentTarget; // Get the bottle container
+    const rect = target.getBoundingClientRect(); // Get the bounding rectangle of the container
+
+    // Calculate the center position
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    setTooltip({
+      visible: true,
+      text: name,
+      position: { x: centerX, y: centerY } // Set tooltip position to center of the image
+    });
+  };
+
+  const handleMouseLeave = () => {
+    if (!isTooltipHovered) {
+      setTooltip({ ...tooltip, visible: false });
+    }
+  };
+
+  const handleTooltipMouseEnter = () => {
+    setIsTooltipHovered(true);
+  };
+
+  const handleTooltipMouseLeave = () => {
+    setIsTooltipHovered(false);
+    setTooltip({ ...tooltip, visible: false });
+  };
+
   const isBottleSelected = (bottle) => {
     return selectedBottle && selectedBottle.id === bottle.id;
   };
@@ -155,6 +189,8 @@ const BottleShelf = ({ bottles, onBottleSelect, selectedBottle }) => {
           selected={isBottleSelected(bottle)}
           disabled={selectedBottle !== null}
           onClick={() => !selectedBottle && onBottleSelect(bottle)}
+          onMouseEnter={(e) => handleMouseEnter(e, bottle.name)}
+          onMouseLeave={handleMouseLeave}
         >
           <BackgroundWrapper />
           <BottleImage 
@@ -164,6 +200,14 @@ const BottleShelf = ({ bottles, onBottleSelect, selectedBottle }) => {
           />
         </BottleContainer>
       ))}
+      {tooltip.visible && (
+        <Tooltip 
+          text={tooltip.text} 
+          position={tooltip.position} 
+          onMouseEnter={handleTooltipMouseEnter} 
+          onMouseLeave={handleTooltipMouseLeave} 
+        />
+      )}
     </ShelfContainer>
   );
 };
